@@ -4,7 +4,7 @@ title:      计划一下这个暑假
 subtitle:   第一次计划
 date:       2020-04-11
 author:     Zichao
-header-img: img/post-bg-ios9-web.jpg
+header-img: img/bloodborne.jpeg
 catalog: true
 tags:
     - iOS
