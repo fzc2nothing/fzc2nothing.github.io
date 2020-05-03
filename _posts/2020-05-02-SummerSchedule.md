@@ -33,4 +33,8 @@ tags:
     x = 1;
  ```
 
+    This Java declaration does two things:
+    1. It allocates a chunk of memory big enough to store an integer, which Java calls type "int".
+    2. It names the variable (chunk of memory) "x".
+
 
