@@ -20,6 +20,9 @@ tags:
 
 刷完ladder1题目
 
+看完JS第一节
+
+看完bootcamp第一节
 
 ## CS 61B 第二节课：
 
