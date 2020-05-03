@@ -38,3 +38,6 @@ tags:
     2. It names the variable (chunk of memory) "x".
 
 
+* Java programs must be compiled before you can run them. Compilation converts your wirtten code to a machine-readable bytecode.
+
+
