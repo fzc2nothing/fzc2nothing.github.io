@@ -28,4 +28,8 @@ tags:
 
 * Inheritance: A class may inherit properties from a more general class. For example, the ShoppingList class inherits from the List class the property of storing a sequence of items.
 
+* ```
+    int x;
+    x = 1;
+
 
