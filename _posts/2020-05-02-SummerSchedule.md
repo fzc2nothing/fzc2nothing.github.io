@@ -24,9 +24,7 @@ tags:
 
 ## CS 61B 第一节课：
 
-* Polymorphism: The ability to have one method call work on several different classes of objects, even if those classes need different implementations of the method call.
-
-For example, one line of code might be able to call the "addItem" method on every kind of List, even though adding an item to a ShoppingList is complelely different from adding an item to a ShoppingCart.
+* Polymorphism: The ability to have one method call work on several different classes of objects, even if those classes need different implementations of the method call. For example, one line of code might be able to call the "addItem" method on every kind of List, even though adding an item to a ShoppingList is complelely different from adding an item to a ShoppingCart.
 
 * Inheritance: 
 
