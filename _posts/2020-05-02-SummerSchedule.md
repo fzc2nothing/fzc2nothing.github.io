@@ -21,3 +21,7 @@ tags:
 周六周日看看cs61b，记笔记
 
 每天刷题三道 + 复习老题三道，重看一遍算法视频
+
+## CS 61B 第一节课：
+
+Polymorphism: The ability to have one method call work on several different classes of objects 
