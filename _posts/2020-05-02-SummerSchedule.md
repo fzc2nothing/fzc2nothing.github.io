@@ -40,4 +40,16 @@ tags:
 
 * Java programs must be compiled before you can run them. Compilation converts your wirtten code to a machine-readable bytecode.
 
+* A complicated input program:
+``` 
+    import java.io.*;
+
+    class SimpleIO {
+        public static void main (String[] arg) throws Exception {
+            BufferedReader keybd = 
+                new BufferedReader(new InputStreamReader(System.in));
+            System.out.println(keybd.readLine());
+        }
+    }
+
 
