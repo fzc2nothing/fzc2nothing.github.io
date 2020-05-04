@@ -29,6 +29,54 @@ tags:
 ## CS 61B 第二节课：
 
 ## Web develop
+    bootstrap
+
+    Jumbotron
+
+    container
+
+    Nav Bars
+
+## LeetCode
+
+### 26. Remove Duplicates from Sorted Array
+
+Use two pointers. One fast pointer and one slow pointer. The array is sorted so that we only need to check the consistency in this array. When there are differeces occuring, we need to put that 
+
+difference number in the correct place. We use the slow pointer to identify the correct place and use the fast pointer to go through this whole array. The time complexity is O(n) and space 
+
+complexity is O(1).
+
+```
+    class Solution {
+    public int removeDuplicates(int[] nums) {
+        
+        if(nums == null || nums.length == 0) {
+            return 0;
+        }
+        
+        int fast = 1;
+        
+        int slow = 0;
+        
+        while(fast<nums.length) {
+            
+            if(nums[slow]!=nums[fast]) {
+                slow++;
+                
+                nums[slow] = nums[fast];
+            }
+            
+            fast++;
+            
+            
+        }
+        
+        return slow+1;
+        
+    }
+}
+```
 
 ## BloodBorne:
     发现代言人阿梅利亚
