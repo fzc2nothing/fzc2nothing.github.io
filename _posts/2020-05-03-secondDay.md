@@ -42,9 +42,7 @@ tags:
 ### 26. Remove Duplicates from Sorted Array
 
 Use two pointers. One fast pointer and one slow pointer. The array is sorted so that we only need to check the consistency in this array. When there are differeces occuring, we need to put that 
-
 difference number in the correct place. We use the slow pointer to identify the correct place and use the fast pointer to go through this whole array. The time complexity is O(n) and space 
-
 complexity is O(1).
 
 ```
