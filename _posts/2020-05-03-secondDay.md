@@ -29,13 +29,14 @@ tags:
 ## CS 61B 第二节课：
 
 ## Web develop
-    bootstrap
 
-    Jumbotron
+bootstrap
 
-    container
+Jumbotron
 
-    Nav Bars
+container
+
+Nav Bars
 
 ## LeetCode
 
