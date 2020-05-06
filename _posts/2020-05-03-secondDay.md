@@ -26,7 +26,7 @@ tags:
 
 完成简历修改
 
-## CS 61B 第二节课：
+
 
 ## Web develop
 
