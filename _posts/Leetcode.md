@@ -99,3 +99,56 @@ complexity is O(1).
         }
     }
 ```
+
+## 2020-05-18
+
+### 63.Unique Paths II
+动态规划，确定最后一步得状态，最后一步的子问题，列出转移方程，注意处理图中特殊的点，比如有障碍或者在边上
+```
+    class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        
+        int m = obstacleGrid.length;
+        
+        if(m == 0) {
+            return 0;
+        }
+        
+        int n = obstacleGrid[0].length;
+        
+        if(n == 0) {
+            return 0;
+        }
+        
+        int[][] dp = new int[m][n];
+        
+        for(int i = 0; i<m; i++) {
+            for(int j = 0; j < n; j++) {
+                
+                if(obstacleGrid[i][j] == 1) {
+                    dp[i][j] = 0;
+                    continue;
+                        
+                }
+                
+                if(i == 0 && j == 0) {
+                    dp[i][j] = 1;
+                    continue;
+                }
+                
+                if(i > 0) {
+                    dp[i][j] += dp[i-1][j];
+                }
+                
+                if(j > 0) {
+                    dp[i][j] += dp[i][j-1];
+                }
+                
+            }
+        }
+        
+        return dp[m-1][n-1];
+        
+        }
+    }
+```
