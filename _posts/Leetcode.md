@@ -12,7 +12,7 @@ tags:
 
 # Leetcode
 
-## 2020-05-02
+## 2020-05-03
 
 ### 26. Remove Duplicates from Sorted Array
 
@@ -49,6 +49,965 @@ complexity is O(1).
         
     }
 }
+```
+
+## 2020-05-04
+
+### 66. Plus One
+Nothing to say, just play with array. Remember to deal with array directly. It is hard to find a proper container for the number.
+```
+    class Solution {
+    public int[] plusOne(int[] digits) {
+        
+        int n = digits.length;
+        
+        for(int i = n-1; i>=0; i--) {
+            
+        if(digits[i] <9) {
+            digits[i] ++;
+            return digits;
+        }
+            
+            digits[i] = 0;
+        }
+        
+        int[] res = new int[n+1];
+        
+        res[0] = 1;
+        
+        return res;
+        
+        }
+    }
+```
+
+## 2020-05-06
+
+### 409. Longest Palindrome
+
+这道题可以统计一下每一个字符出现的次数，大小写英文字母通过其对应的unicode码来区分，当出现奇数个的时候，不论出现几个奇数，总是取其偶数部分，最后总数加一，因为只有回文串最中间的字母可以是奇数个
+
+```
+    class Solution {
+    public int longestPalindrome(String s) {
+        
+        int length = 0;
+        
+        boolean isOdd = false;
+        
+        int[] as = new int[256];
+        
+        for(char ii:s.toCharArray()) {
+            as[ii]++;
+        }
+        
+        
+        for(int i = 0; i<as.length; i++) {
+            length+=(as[i]/2);
+            
+            if(as[i]%2 == 1) {
+                isOdd = true;
+            }
+        }
+        
+        return 2*length + (isOdd?1:0);
+        
+        }
+    }
+```
+
+### 28. Implement strStr()
+这道题如果是O(n2)的话就是正常遍历一遍，也可以用KMP算法
+
+
+```
+    public class Solution {
+    /**
+     * @param source: 
+     * @param target: 
+     * @return: return the index
+     */
+    public int strStr(String source, String target) {
+        // Write your code here
+        
+        if(target.length() == 0) {
+            return 0;
+        }
+        
+        if(source.length() < target.length()) {
+            return -1;
+        }
+        
+        int mark = 0;
+        
+        boolean isIdentical = true;
+        
+        while(mark<=source.length()-target.length()) {
+            for(int i = 0; i<target.length(); i++) {
+                
+                int temp = mark + i;
+                
+                if(source.charAt(temp) != target.charAt(i)) {
+                    isIdentical = false;
+                    mark++;
+                    break;
+                }
+                
+            }
+            if(isIdentical == true)
+                return mark;
+            else 
+                isIdentical = true;
+                continue;
+            
+        }
+        
+        return -1;
+        
+        }
+    }
+```
+
+### 125. Valid Palindrome
+这道题我的做法是上来全变成小写，在从头尾双指针进行判断，遇到不符合要求的字符就跳过，其中要注意的是，小写字母Unicode的范围是97-122，数字的Unicode的范围是48-57，大写字母的Unicode的范围是65-90。特殊情况包含这个数组没有字符以及没有符合要求的字符两种
+
+
+```
+    class Solution {
+    public boolean isPalindrome(String s) {
+        
+        if(s.length() == 0 || s == null) {
+            return true;
+        }
+        
+        String temp = s.toLowerCase();
+        
+        int start = 0;
+        
+        int end  = temp.length() -1;
+        
+        while(start<=end) {
+            while(!((temp.charAt(start)<=57 && temp.charAt(start)>=48)||(temp.charAt(start)<=122 && temp.charAt(start)>=97))) {
+                start ++;
+                if(start>temp.length()-1) {
+                    return true;
+                }
+            }
+            
+            while(!((temp.charAt(end)<=57 && temp.charAt(end)>=48)||(temp.charAt(end)<=122 && temp.charAt(end)>=97))) {
+                end --;
+            }
+            
+            if (temp.charAt(start) != temp.charAt(end)) {
+                return false;
+            }
+            else {
+                start ++;
+                end --;
+            }
+        }
+        
+        return true;
+        
+        }
+    }
+```
+
+## 2020-05-07
+
+### 5. Longest Palindromic Substring
+通过对称轴进行判断，从左到右遍历所有的对称轴
+
+
+```
+    class Solution {
+    public String longestPalindrome(String s) {
+        
+        if(s == null || s.length() ==0) {
+            return "";
+        }
+        
+        int longest = 0;
+        
+        int len = 0;
+        
+        int start = 0;
+            
+        for(int i = 0; i<s.length(); i++) {
+            len = findLength (s,i ,i );
+            
+            if(len > longest) {
+                longest = len;
+                start = i - len/2;
+            }
+            
+            len = findLength(s,i,i+1);
+            
+            if(len > longest) {
+                longest = len;
+                start = i-len/2+1;
+            }
+        }
+        
+        return s.substring(start,start+longest);
+        
+    }
+    
+    private int findLength(String s, int left, int right) {
+        int len = 0;
+        
+        while(left>=0 && right < s.length()) {
+            if(s.charAt(left) != s.charAt(right)) {
+                break;
+            }
+             len += left == right?1:2;
+            left--;
+            right++;
+            
+           
+        }
+        
+        return len;
+        }
+    }
+```
+
+拓扑排序中
+
+1. 首先找出入度为零的点，放入queue
+2. 
+
+### 133. Clone Graph
+```
+    /*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> neighbors;
+    
+    public Node() {
+        val = 0;
+        neighbors = new ArrayList<Node>();
+    }
+    
+    public Node(int _val) {
+        val = _val;
+        neighbors = new ArrayList<Node>();
+    }
+    
+    public Node(int _val, ArrayList<Node> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+}
+*/
+
+class Solution {
+    public Node cloneGraph(Node node) {
+        
+        if(node == null)
+            return node;
+        
+        HashMap<Node,Node> map = new HashMap<>();
+        
+        ArrayList<Node> nodes = getNode(node);
+        
+        for(Node ss:nodes) {
+            map.put(ss,new Node(ss.val));
+        }
+        
+        for(Node ss:nodes) {
+            Node newNode = map.get(ss);
+          for(Node neighbor: ss.neighbors) {
+            Node newNeighbor = map.get(neighbor);
+            newNode.neighbors.add(newNeighbor);
+          }  
+            
+        }
+        
+        return map.get(node);
+        
+        
+    }
+    
+    private ArrayList<Node> getNode(Node start) {
+        Queue<Node> queue = new LinkedList<>();
+        HashSet<Node> set = new HashSet<>();
+        
+        queue.offer(start);
+        
+        set.add(start);
+        
+        while(!queue.isEmpty()) {
+            Node temp = queue.poll();
+            for(Node ch : temp.neighbors) {
+                if(!set.contains(ch)) {
+                    set.add(ch);
+                    queue.offer(ch);
+                }
+            }
+        }
+        
+        return new ArrayList<Node>(set);
+        
+        }
+    }
+```
+### Lintcode 618 Search Graph Nodes
+```
+/**
+ * Definition for graph node.
+ * class UndirectedGraphNode {
+ *     int label;
+ *     ArrayList<UndirectedGraphNode> neighbors;
+ *     UndirectedGraphNode(int x) { 
+ *         label = x; neighbors = new ArrayList<UndirectedGraphNode>(); 
+ *     }
+ * };
+ */
+
+
+public class Solution {
+    /*
+     * @param graph: a list of Undirected graph node
+     * @param values: a hash mapping, <UndirectedGraphNode, (int)value>
+     * @param node: an Undirected graph node
+     * @param target: An integer
+     * @return: a node
+     */
+    public UndirectedGraphNode searchNode(ArrayList<UndirectedGraphNode> graph,
+                                          Map<UndirectedGraphNode, Integer> values,
+                                          UndirectedGraphNode node,
+                                          int target) {
+        // write your code here
+        
+        if(values.get(node) == target)
+        return node;
+        
+        Queue<UndirectedGraphNode> queue = new LinkedList<>();
+        
+        HashSet<UndirectedGraphNode> set = new HashSet<>();
+        
+        queue.offer(node);
+        
+        set.add(node);
+        
+        while(!queue.isEmpty()){
+            
+            int len = queue.size();
+            
+            for(int i = 0; i<len; i++) {
+                
+                UndirectedGraphNode temp = queue.poll();
+                
+                for(UndirectedGraphNode ch : temp.neighbors) {
+                    if(!set.contains(ch)) {
+                        set.add(ch);
+                        if(values.get(ch) == target)
+                        return ch;
+                        queue.offer(ch);
+                    }
+                }
+                
+                
+                
+            }
+            
+        }
+        
+        return null;
+        }
+    }
+```
+
+## 2020-05-08
+
+### 200. Number of islands
+做了好几遍了，三个函数，分别计算岛的数量，用bfs探索邻居，判断其在不在棋盘范围内，坐标类用来指示坐标，两个数组来指代横向纵向位移
+```
+    class Solution {
+    
+    class Coordinate {
+        int x;        
+        int y;
+        public Coordinate (int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+    
+    public int numIslands(char[][] grid) {
+        
+        if(grid.length == 0 || grid[0].length == 0) {
+            return 0;
+        } 
+        
+        int m = grid.length;
+        
+        int n = grid[0].length;
+        
+        int count = 0;
+        
+        for(int i = 0; i<m; i++) {
+            for(int j = 0; j<n; j++) {
+                if(grid[i][j] == '1') {
+                    BFS(grid,i,j);
+                    count++;
+                }
+                
+            }
+        }
+        
+        return count;
+        
+    }
+    
+    private void BFS(char[][] grid, int x, int y) {
+
+            int[] deltaX = {1,0,0,-1};
+
+            int[] deltaY = {0,1,-1,0};
+
+            Queue<Coordinate> queue = new LinkedList<>();
+
+            Coordinate start = new Coordinate(x,y);
+
+            queue.offer(start);
+        
+            grid[start.x][start.y] = '0';
+
+            while(!queue.isEmpty()) {
+                Coordinate temp = queue.poll();
+                
+                for(int i= 0; i<4; i++) {
+                    Coordinate neighbor = new Coordinate(
+                    temp.x+deltaX[i],
+                    temp.y+deltaY[i]
+                    );
+                if(inBound(grid,neighbor.x,neighbor.y)&&(grid[neighbor.x][neighbor.y] == '1')) {
+                    queue.offer(neighbor);
+                    grid[neighbor.x][neighbor.y] = '0';
+                }
+            }
+
+
+        }
+    }
+    private boolean inBound(char[][] grid, int x, int y) {
+        int m = grid.length;
+        
+        int n = grid[0].length;
+        
+        return x >= 0 && x < m && y>=0 && y <n;
+        }
+    }
+```
+
+### 102. Binary Tree Level Order Traersal
+BFS没啥说的
+
+```
+    /**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        
+        
+        
+        List<List<Integer>> res = new ArrayList<>();
+        
+        if(root == null) {
+            return res;
+        }
+        
+        Queue<TreeNode> queue = new LinkedList<>();
+        
+        queue.offer(root);
+        
+        while(!queue.isEmpty()) {
+            
+            List<Integer> temp = new ArrayList<>();
+        
+            int length = queue.size();
+            
+            for(int i = 0; i<length; i++){
+                
+                TreeNode cur = queue.poll();
+                
+                temp.add(cur.val);
+                
+                if(cur.left != null) {
+            
+                    queue.offer(cur.left);
+                }
+                
+                if(cur.right != null) {
+        
+                    queue.offer(cur.right);
+                }
+                
+            }
+            
+            res.add(temp);
+            
+        }
+        
+        return res;
+        
+        }
+    }
+```
+
+### 207. Course Schedule
+拓扑排序，计数的时候有一些奇怪，只有一次变更数字，就是在poll的时候，逻辑上确实是这样，因为poll出来就证明这门课可以当作一个起点来用了。这个图的表示是用的adjancency list。其中给出的prerequiste是一对数字组成的，[0,1]的意思就是如果想上课0就得先上课1。就是说现在课1的入度为零连着课0。所以我们的adjacent list就是以1为起点。在BFS while循环的内部，只要是拿出来Node所连接的Node，他们的入度都不可能是0，所以直接对他们减一删除这个正在上的课，删完之后再去看是不是有人变成零了，有的话就加进queue里面去
+```
+    class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int[] nodes = new int[numCourses];
+        
+        List[] edges = new ArrayList[numCourses];
+        
+        int numChoose = 0;
+        
+        for(int i = 0; i<numCourses; i++) {
+            edges[i] = new ArrayList<Integer>();
+        }
+        
+        for(int[] edge:prerequisites) {
+            edges[edge[1]].add(edge[0]);
+            nodes[edge[0]]++;
+        }
+        
+        Queue<Integer> queue = new LinkedList<>();
+        
+        for(int i = 0; i<nodes.length; i++) {
+            if(nodes[i] == 0) {
+                queue.offer(i);
+                
+            }
+        }
+        
+        while(!queue.isEmpty()){
+            
+            int mark = (int)queue.poll();
+            numChoose++;
+            
+            for(int i = 0; i< edges[mark].size(); i++) {
+                int nxt = (int)edges[mark].get(i);
+                
+                    nodes[nxt]--;
+                    
+                
+                if(nodes[nxt] == 0) {
+                    queue.offer(nxt);
+                  
+                }
+            }
+            
+            
+        }
+         // write your code here
+         
+         return numChoose == numCourses;
+        }
+    }
+```
+
+## 2020-05-09
+
+### 210. Course Schedule II
+和普通的course schedule也没什么区别，直接BFS，每次找到入度为零的点都直接放进最后要返回的结果List里面
+``` 
+    class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        
+        List<Integer> res = new ArrayList<>();
+        
+        int[] inDegree = new int[numCourses];
+        
+        List[] edges = new ArrayList[numCourses];
+        
+        for(int i = 0; i < numCourses; i++) {
+            
+            edges[i] = new ArrayList<Integer>();
+            
+        }
+        
+        for(int[] edge : prerequisites) {
+            edges[edge[1]].add(edge[0]);
+            inDegree[edge[0]]++;
+        }
+        
+        int numChoose = 0;
+        
+        Queue<Integer> queue = new LinkedList<>();
+        
+        for(int i = 0; i<numCourses; i++) {
+            
+            if(inDegree[i] == 0) {
+                queue.offer(i);
+                res.add(i);
+            }
+            
+        }
+        
+        while(!queue.isEmpty()) {
+            
+            int temp =(int)queue.poll();
+            
+            numChoose++;
+            
+            for(int i = 0; i<edges[temp].size(); i++) {
+                int nxt =(int)edges[temp].get(i);
+                inDegree[nxt]--;
+                if(inDegree[nxt] == 0) {
+                    queue.offer(nxt);
+                    res.add(nxt);
+                }
+            }
+            
+        }
+        
+        if(numCourses == numChoose) {
+            int[]  ans = new int[res.size()];
+            for(int i = 0; i < res.size(); i++) {
+                ans[i] = res.get(i);
+            }
+            return ans;
+        }
+        
+        else
+            return new int[0];
+        
+        }
+    }
+```
+
+### Lintocde 611. Course Schedule II
+BFS,没啥说的
+```
+    /**
+ * Definition for a point.
+ * class Point {
+ *     int x;
+ *     int y;
+ *     Point() { x = 0; y = 0; }
+ *     Point(int a, int b) { x = a; y = b; }
+ * }
+ */
+
+public class Solution {
+    /**
+     * @param grid: a chessboard included 0 (false) and 1 (true)
+     * @param source: a point
+     * @param destination: a point
+     * @return: the shortest path 
+     */
+     
+    public int shortestPath(boolean[][] grid, Point source, Point destination) {
+        
+        
+        
+        int[] deltaX = {2,2,-2,-2,1,1,-1,-1};
+        
+        int[] deltaY = {1,-1,1,-1,2,-2,2,-2};
+        
+        Queue<Point> queue = new LinkedList<>();
+        
+        queue.offer(source);
+        
+        grid[source.x][source.y] = true;
+        
+        int numJump = 0;
+        
+        while(!queue.isEmpty()) {
+            
+            int length = queue.size();
+            
+            for(int i = 0; i< length; i++) {
+                
+                Point temp = queue.poll();
+                
+                for(int j = 0; j<8; j++) {
+                    Point neighbor = new Point(
+                        temp.x + deltaX[j],
+                        temp.y + deltaY[j]
+                        );
+                    if(inBound(grid,neighbor)) {
+                        if(grid[neighbor.x][neighbor.y] == false) {
+                            if(neighbor.x == destination.x && neighbor.y == destination.y){
+                                numJump++;
+                                return numJump;
+                            }
+                            else {
+                                queue.offer(neighbor);
+                                grid[neighbor.x][neighbor.y] = true;
+                                
+                            }
+                            
+                        }
+                    }
+                }
+                
+                
+                
+                
+                
+            }
+            numJump++;
+            
+            
+            
+        }
+        
+        return -1;
+        
+        
+        // write your code here
+    }
+    
+    private boolean inBound(boolean[][] grid, Point target) {
+        
+        int m = grid.length;
+        
+        int n = grid[0].length;
+        
+        return target.x >= 0 && target.x < m && target.y >= 0 && target.y<n;
+        
+        }
+    }
+```
+
+## 2020-05-12
+
+二分法模板，注意循环退出条件是start + 1 < end
+二分法：
+```
+    class Solution {
+        public int binarySearch(int[] nums, int target) {
+
+            if(nums == null || nums.length == 0) {
+                return -1;
+            }
+
+            int start = 0;
+
+            int end = nums.length - 1;
+
+            while (start + 1 < end) {
+                int mid = start + (end - start)/2;
+                if(nums[mid] == target) {
+                    end = mid;
+                }
+                else if(nums[mid] < target ) {
+                    start = mid;
+                }
+                else {
+                    end = mid;
+                }
+            }
+
+            if(nums[start] == target) {
+                return start;
+            }
+            if(nums[end] == target) {
+                return end;
+            }
+
+            return -1;
+
+
+
+
+        }
+    }
+```
+
+### Lintcode 447 Search in a big Sorted Array
+先使用倍增法从开头的1找到其应该截止的位置，再从0和该位置进行二分查找
+```
+    public class Solution {
+    /**
+     * @param reader: An instance of ArrayReader.
+     * @param target: An integer
+     * @return: An integer which is the first index of target.
+     */
+    public int searchBigSortedArray(ArrayReader reader, int target) {
+        // write your code here
+        int start = 0; 
+        int end = 1;
+        while(reader.get(end) < target) {
+            end = end *2;
+        }
+        
+        while(start + 1< end) {
+            int mid = start + (end - start)/2;
+            if(reader.get(mid) == target) {
+                end = mid;
+            }
+            else if(reader.get(mid) < target) {
+                start = mid;
+            }
+            else {
+                end = mid;
+            }
+        }
+        
+        if(reader.get(start) == target) {
+            return start;
+        }
+        if(reader.get(end) == target) {
+            return end;
+        }
+        
+        return -1;
+        
+        
+        }
+    }
+```
+
+### Leetcode 658 Find K closest Elements
+首先找出来目标在哪里，借助二分法找出来，再从目标向两边寻找找到最接近的
+```
+    import java.util.*; 
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        
+        int[] res = new int[k];
+        
+        if(arr == null || arr.length == 0) {
+            List<Integer> ans =  new ArrayList<>();
+            
+            for(int ch:res) {
+                ans.add(ch);
+            }
+            return ans;
+        }
+        
+        if(arr.length < k) {
+            List<Integer> ans =  new ArrayList<>();
+            
+            for(int ch:res) {
+                ans.add(ch);
+            }
+            return ans;
+        }
+        
+        int index = helper(arr, x);
+        
+        int start = index - 1;
+        
+        int end = index;
+        
+        for(int i = 0; i<k; i++) {
+            if(start < 0) {
+                res[i] = arr[end++];
+            }
+            else if(end >= arr.length) {
+                res[i]  = arr[start--];
+            }
+                else {
+                    if(x - arr[start] <= arr[end] - x) {
+                        res[i] = arr[start --];
+                    }
+                    else {
+                        res[i] = arr[end++];
+                    }
+                }
+            }
+        
+       List<Integer> ans =  new ArrayList<>();
+        
+        
+            
+            for(int ch:res) {
+                ans.add(ch);
+            }
+        
+        Collections.sort(ans);
+    
+       return ans;
+        
+    }
+    
+    private int helper(int[] arr, int x) {
+        int start = 0;
+        
+        int end = arr.length-1;
+        
+        while(start + 1< end) {
+            int mid = start + (end - start)/2;
+            
+            if(arr[mid] == x) {
+                end = mid;
+            }
+            else if(arr[mid] < x) {
+                start = mid;
+            }
+            else {
+                end = mid;
+            }
+        }
+        
+        if(arr[start] >= x) {
+            return start;
+        }
+        if(arr[end] >= x) {
+            return end;
+        }
+        
+        return arr.length;
+        }
+    }
+```
+
+## 2020-05-13
+
+### Leetcode 852 Peak Index in a Mountain Array
+借助二分法找到山峰，判断山峰的方法就是前一个比后一个大，如果出现这种情况，证明拐点必定在第一个较大的数之前
+```
+    class Solution {
+    public int peakIndexInMountainArray(int[] A) {
+        
+        if(A == null) {
+            return 0;
+        }
+        
+        int start = 0;
+        
+        int end = A.length -1;
+        
+        while(start + 1 < end) {
+            int mid = start + (end - start)/2;
+            if(A[mid] > A[mid+1]) {
+                end = mid;
+            } else {
+                start = mid;
+            }
+        }
+        
+        if(A[start] > A[end]) {
+            return start;
+        } else {
+            return end;
+        }
+        
+        }
+    }
 ```
 
 ## 2020-05-14
@@ -186,6 +1145,36 @@ complexity is O(1).
         }
         
         return Math.min(dp[n][0],Math.min(dp[n][1],dp[n][2]));
+        
+        }
+    }
+```
+
+
+## 2020-05-19
+
+### 674.Longest Continuous Increasing Subsequence
+```
+    class Solution {
+    public int findLengthOfLCIS(int[] nums) {
+        
+        int n = nums.length;
+        
+        int res = 0;
+        
+        int[] dp = new int[n];
+        
+        for(int i = 0; i<n; i++) {
+            dp[i] = 1;
+            
+            if(i>0 && nums[i]>nums[i-1]) {
+                dp[i] = dp[i - 1]+1;
+            }
+            
+            res = Math.max(res,dp[i]);
+        }
+        
+        return res;
         
         }
     }
