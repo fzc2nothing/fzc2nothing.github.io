@@ -11,7 +11,7 @@ github_repo: "https://github.com/fzc2nothing/fzc2nothing.github.io" # you code r
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "I will achieve my goal!"
+sidebar-about-description: "Never Give Up !"
 sidebar-avatar: /img/2019_03_15_16_44_IMG_5022.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
